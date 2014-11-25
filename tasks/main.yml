@@ -1,0 +1,12 @@
+---
+# tasks file for ajsalminen.sudoers_fragment
+
+- name: Install vagrant sudo config.
+  template:
+    src: sudoers_fragment.j2
+    dest: /etc/sudoers.d/{{ sudoers_fragment_name|default(sudoers_fragment_users.0) }}
+    owner: root
+    group: root
+    mode: 0440
+    validate: "/usr/sbin/visudo -cf %s"
+  when: sudoers_fragment_users != []
